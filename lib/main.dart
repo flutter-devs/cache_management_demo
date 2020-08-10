@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
@@ -35,12 +36,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class UploadCacheMemoryData extends StatefulWidget {
-  @override
-  _UploadCacheMemoryDataState createState() => _UploadCacheMemoryDataState();
-}
-
-class _UploadCacheMemoryDataState extends State<UploadCacheMemoryData> {
+class UploadCacheMemoryData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("UploadCacheMemoryData");
@@ -49,7 +45,18 @@ class _UploadCacheMemoryDataState extends State<UploadCacheMemoryData> {
       builder: (_, snapshot) {
         FileInfo fileInfo = snapshot.data as FileInfo;
         return snapshot.hasData
-            ? Image.file(fileInfo.file)
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.file(fileInfo.file),
+                  Text("Original Url:${fileInfo.originalUrl}"),
+                  Text("Valid Till:${fileInfo.validTill}"),
+                  Text("File address:${fileInfo.file}"),
+                  Text("File source:${fileInfo.source}"),
+                  Text("Hash code:${fileInfo.hashCode}"),
+                  Text("Hash code:${fileInfo.runtimeType}"),
+                ],
+              )
             : Center(
                 child: Text("Uploading..."),
               );
@@ -58,23 +65,27 @@ class _UploadCacheMemoryDataState extends State<UploadCacheMemoryData> {
   }
 }
 
-class FetchCacheMemoryData extends StatefulWidget {
-  @override
-  _FetchCacheMemoryDataState createState() => _FetchCacheMemoryDataState();
-}
-
-class _FetchCacheMemoryDataState extends State<FetchCacheMemoryData> {
+class FetchCacheMemoryData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      fileInfoFuture = DefaultCacheManager().getFileFromCache(url);
-    });
+    print("FetchCacheMemoryData");
     return FutureBuilder(
       future: DefaultCacheManager().getFileFromCache(url),
       builder: (context, snapshot) {
         FileInfo fileInfo = snapshot.data as FileInfo;
         return snapshot.hasData
-            ? Image.file(fileInfo.file)
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.file(fileInfo.file),
+                  Text("Original Url:${fileInfo.originalUrl}"),
+                  Text("Valid Till:${fileInfo.validTill}"),
+                  Text("File address:${fileInfo.file}"),
+                  Text("File source:${fileInfo.source}"),
+                  Text("Hash code:${fileInfo.hashCode}"),
+                  Text("Hash code:${fileInfo.runtimeType}"),
+                ],
+              )
             : Center(child: Text("Fetching..."));
       },
     );
