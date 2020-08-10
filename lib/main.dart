@@ -70,7 +70,7 @@ class FetchCacheMemoryData extends StatelessWidget {
   Widget build(BuildContext context) {
     print("FetchCacheMemoryData");
     return FutureBuilder(
-      future: DefaultCacheManager().getFileFromCache(url),
+      future:fileInfoFuture,
       builder: (context, snapshot) {
         FileInfo fileInfo = snapshot.data as FileInfo;
         return snapshot.hasData
